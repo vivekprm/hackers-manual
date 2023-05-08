@@ -171,12 +171,14 @@ So, from our enumeration stage, we know:
 
 Using this information, let's try and bruteforce the password of the FTP Server.
 
-Hydra
-
+### Hydra
 Hydra is a very fast online password cracking tool, which can perform rapid dictionary attacks against more than 50 Protocols, including Telnet, RDP, SSH, FTP, HTTP, HTTPS, SMB, several databases and much more. Hydra comes by default on both Parrot and Kali, however if you need it, you can find the GitHub here.
 The syntax for the command we're going to use to find the passwords is this:
 
-"hydra -t 4 -l dale -P /usr/share/wordlists/rockyou.txt -vV 10.10.10.6 ftp"
+```sh
+hydra -t 4 -l dale -P /usr/share/wordlists/rockyou.txt -vV 10.10.10.6 ftp
+```
+
 Let's break it down:
 
 SECTION             FUNCTION
