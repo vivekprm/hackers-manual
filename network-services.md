@@ -196,3 +196,10 @@ hydra                   Runs the hydra tool
 [machine IP]            The IP address of the target machine
 
 ftp / protocol          Sets the protocol
+
+# Further Reading
+Here's some things that might be useful to read, if it interests you:
+
+https://medium.com/@gregIT/exploiting-simple-network-services-in-ctfs-ec8735be5eef
+https://attack.mitre.org/techniques/T1210/
+https://www.nextgov.com/cybersecurity/2019/10/nsa-warns-vulnerabilities-multiple-vpn-services/160456/
