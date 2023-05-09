@@ -73,4 +73,27 @@ ls -la /mnt/kenobiNFS
 We now have a network mount on our deployed machine! We can go to /var/tmp and get the private key then login to Kenobi's account.
 ![image](https://user-images.githubusercontent.com/2403660/237006313-ee3ddccf-7a6c-422d-8979-f3f6c9ea8071.png)
 
+# Privilege Escalation with Path Variable Manipulation
+![image](https://user-images.githubusercontent.com/2403660/237008077-089607de-12d0-42f6-8aac-c50c1484d6e6.png)
 
+Lets first understand what what SUID, SGID and Sticky Bits are.
+![image](https://user-images.githubusercontent.com/2403660/237008922-db95fabc-ef59-4ff1-9e21-975e9aa00fd8.png)
+
+SUID bits can be dangerous, some binaries such as passwd need to be run with elevated privileges (as its resetting your password on the system), however other custom files could that have the SUID bit can lead to all sorts of issues.
+
+To search the a system for these type of files run the following: 
+```sh
+find / -perm -u=s -type f 2>/dev/null
+```
+/usr/bin/menu file looks particularly out of the ordinary.
+
+
+```Strings``` is a command on Linux that looks for human readable strings on a binary.
+![image](https://user-images.githubusercontent.com/2403660/237010305-910f86c3-9b85-4fd4-a6fd-fd815bd3f181.png)
+
+This shows us the binary is running without a full path (e.g. not using /usr/bin/curl or /usr/bin/uname).
+
+As this file runs as the root users privileges, we can manipulate our path gain a root shell.
+![image](https://user-images.githubusercontent.com/2403660/237010495-98b58e8b-3e9a-4978-a930-fbeae56d3bfc.png)
+
+We copied the /bin/sh shell, called it curl, gave it the correct permissions and then put its location in our path. This meant that when the /usr/bin/menu binary was run, its using our path variable to find the "curl" binary.. Which is actually a version of /usr/sh, as well as this file being run as root it runs our shell as root!
