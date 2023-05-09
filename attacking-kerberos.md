@@ -76,7 +76,7 @@ When brute-forcing through Kerberos you can brute-force by only sending a single
 domain from a wordlist.
 
 ## Kerbrute Installation - 
-1.) Download a precompiled binary for your OS - https://github.com/ropnop/kerbrute/releases
+1.) Download a precompiled binary for your OS - https://github.com/ropnop/kerbrute/releases. 
 2.) Rename kerbrute_linux_amd64 to kerbrute
 3.) chmod +x kerbrute - make kerbrute executable
 
