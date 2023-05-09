@@ -76,16 +76,16 @@ When brute-forcing through Kerberos you can brute-force by only sending a single
 domain from a wordlist.
 
 ## Kerbrute Installation - 
-1.) Download a precompiled binary for your OS - https://github.com/ropnop/kerbrute/releases. 
-2.) Rename kerbrute_linux_amd64 to kerbrute
-3.) chmod +x kerbrute - make kerbrute executable
+1. Download a precompiled binary for your OS - https://github.com/ropnop/kerbrute/releases  
+2. Rename kerbrute_linux_amd64 to kerbrute  
+3. chmod +x kerbrute - make kerbrute executable  
 
 ## Enumerating Users w/ Kerbrut
 Enumerating users allows you to know which user accounts are on the target domain and which accounts could potentially be used to access the network.
 
-1.) cd into the directory that you put Kerbrute
-2.) Download the wordlist to enumerate with here
-3.) ```./kerbrute userenum --dc CONTROLLER.local -d CONTROLLER.local User.txt``` - This will brute force user accounts from a domain controller using a supplied wordlist
+1. cd into the directory that you put Kerbrute  
+2. Download the wordlist to enumerate with here  
+3. ```./kerbrute userenum --dc CONTROLLER.local -d CONTROLLER.local User.txt``` - This will brute force user accounts from a domain controller using a supplied wordlist
 
 ![image](https://github.com/vivekprm/hackers-manual/assets/2403660/86502497-f50a-4d1e-a084-7c590641e8ac)
 
