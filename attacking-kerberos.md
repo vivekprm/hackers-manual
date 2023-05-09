@@ -37,14 +37,14 @@ user to the KDC, in return, the KDC validates the TGT and returns a service tick
 # Kerberos Authentication Overview
 ![image](https://github.com/vivekprm/hackers-manual/assets/2403660/f8ab341c-aade-4c05-bd27-b2a300b2821c)
 
-AS-REQ - 1.) The client requests an Authentication Ticket or Ticket Granting Ticket (TGT).
-AS-REP - 2.) The Key Distribution Center verifies the client and sends back an encrypted TGT.
+AS-REQ - 1.) The client requests an Authentication Ticket or Ticket Granting Ticket (TGT).  
+AS-REP - 2.) The Key Distribution Center verifies the client and sends back an encrypted TGT.  
 TGS-REQ - 3.) The client sends the encrypted TGT to the Ticket Granting Server (TGS) with the Service Principal Name (SPN) of the service the client 
-wants to access.
+wants to access.  
 TGS-REP - 4.) The Key Distribution Center (KDC) verifies the TGT of the user and that the user has access to the service, then sends a valid session 
-key for the service to the client.
-AP-REQ - 5.) The client requests the service and sends the valid session key to prove the user has access.
-AP-REP - 6.) The service grants access
+key for the service to the client.  
+AP-REQ - 5.) The client requests the service and sends the valid session key to prove the user has access.  
+AP-REP - 6.) The service grants access  
 
 ## Kerberos Tickets Overview
 The main ticket that you will see is a ticket-granting ticket these can come in various forms such as a .kirbi for Rubeus .ccache for Impacket. The main 
