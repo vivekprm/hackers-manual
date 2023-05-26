@@ -1,6 +1,6 @@
 RDP into the windows machine from Linux Attackbox
 ```sh
-xfreerdp /dynamic-resolution +clipboard /cert:ignore /v:10.10.60.209 /u:Administrator /p:'BHN2UVw0Q'
+xfreerdp /dynamic-resolution +clipboard /cert:ignore /v:10.10.108.62 /u:Administrator /p:'BHN2UVw0Q'
 ```
 
 # What is Powershell?
@@ -119,6 +119,42 @@ A: ```Get-ChildItem -Recurse | Where-Object {$_.Name -match 'interesting-file'}`
 Q: Get content of this file
 A: ```Get-Content "C:\Program Files\interesting-file.txt.txt"```
 
+Q: How many cmdlets are installed on the system(only cmdlets, not functions and aliases)?
+A: ```Get-Command -Type cmdlet | measure```
+
+Q: Get the MD5 hash of interesting-file.txt
+A: Search for a command:
+```
+Get-Command | Select-String -Pattern 'Hash' -CaseSensitive -SimpleMatch
+```
+
+You will see ```Get-Hash```. Now to get the MD5 hash use below:
+```Get-FileHash "C:\Program Files\interesting-file.txt"```
+
+Q: What is the command to get the current working directory?
+A: Get-Location
+
+Q: Does the path "C:\Users\Administrator\Documents\Passwords" Exist?
+A: ```Test-Path C:\Users\Administrator\Documents\Passwords```
+
+Q: What command would you use to make a request to a web server?
+A: Use below search to search associated cmdlets
+```
+ Get-Command | Select-String -Pattern 'WebRequest'
+```
+
+```
+Invoke-WebRequest https://dog.ceo/api/breeds/image/random
+```
+Q: Base64 decode the file b64.txt on Windows.
+A: First search for the file then:
+```
+Get-ChildItem -Recurse | Where-Object {$_.Name -match 'b64.txt'}
+```
+```
+Get-Content .\Desktop\b64.txt | %{[Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($_))}
+```
+
 # Enumeration
 The first step when you have gained initial access to any machine would be to enumerate. We'll be enumerating the following:
 - users
@@ -129,6 +165,58 @@ The first step when you have gained initial access to any machine would be to en
 - insecure files
 
 Your task will be to answer the following questions to enumerate the machine using Powershell commands! 
+
+Q: How many users are there on the machine?
+A: ```Get-LocalUser | measure```
+
+Q: Which local user does this SID(S-1-5-21-1394777289-3961777894-1791813945-501) belong to?
+A: ```Get-LocalUser | Where-Object {$_.SID -Contains "S-1-5-21-1394777289-3961777894-1791813945-501"}```
+
+Q: How many users have their password required values set to False?
+A: ```Get-LocalUser | Select-Object -Property Name, PasswordRequired |  Where-Object {$_.PasswordRequired -eq 0}```
+
+Q: How many local groups exist?
+A: ```Get-LocalGroup | measure```
+
+Q: What command did you use to get the IP address info?
+A: ```Get-NetIPAddress```
+
+Q: How many ports are listed as listening?
+A: ```Get-NetTCPConnection -State Listen | measure```
+
+Q: What is the remote address of the local port listening on port 445?
+A: ```Get-NetTCPConnection -State Listen | Select-Object -Property Name, LocalPort, RemoteAddress |  Where-Object {$_.LocalPort -eq "445"}```
+
+Q: How many patches have been applied?
+A: ```Get-HotFix | measure```
+
+Q: When was the patch with ID KB4023834 installed?
+A: ```Get-HotFix | Where-Object {$_.HotFixID -Contains "KB4023834"}```
+
+Q: Find the contents of a backup file.
+A: Search for the backup files:
+```Get-ChildItem -Path C:\ -Include *.bak* -File -Recurse -ErrorAction SilentlyContinue```
+
+Get content of backup file:
+```Get-Content "C:\Program Files (x86)\Internet Explorer\passwords.bak.txt"```
+
+Q: Search for all files containing API_KEY
+A: Search for all the files containing API_KEY
+```ls -r C:\ | Select-String API_KEY -ErrorAction SilentlyContinue | select pattern,path```
+
+Read content of the Files:
+```
+Get-Content C:\Users\Public\Music\config.xml
+```
+
+Q: What command do you do to list all the running processes?
+A: ```Get-Process```
+
+Q: What is the path of the scheduled task called new-sched-task?
+A: ```Get-Scheduledtask -TaskName new-sched-task```
+
+Q: Who is the owner of the C:\
+A: ```Get-Acl C:\```
 
 # Basic Scripting Challenge
 Now that we have run powershell commands, let's actually try write and run a script to do more complex and powerful actions. 
@@ -179,6 +267,15 @@ Martha and Mary have been sending to each other(and themselves). Answer the foll
 a script to answer the questions). 
 
 Scripting may be a bit difficult, but [here](https://learnxinyminutes.com/docs/powershell/) is a good resource to use: 
+
+Q: Locate the file with password
+A: 
+```ps1
+$path = 'C:\Users\Administrator\Desktop\emails\*'
+$magic_word = 'password'
+$exec = Get-ChildItem $path -recurse | Select-String -pattern $magic_word
+echo $exec
+```
 
 # Intermediate Scripting
 Now that you've learnt a little bit about how scripting works - let's try something a bit more interesting. Sometimes we may not have utilities like nmap and 
