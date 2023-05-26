@@ -1,3 +1,6 @@
+# Writeup
+https://deskel.github.io/posts/thm/hacking-with-powershell
+
 RDP into the windows machine from Linux Attackbox
 ```sh
 xfreerdp /dynamic-resolution +clipboard /cert:ignore /v:10.10.108.62 /u:Administrator /p:'BHN2UVw0Q'
