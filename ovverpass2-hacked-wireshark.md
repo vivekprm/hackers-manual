@@ -99,3 +99,7 @@ find / 2>/dev/null -perm -u=s
 
 So we see a suspicious excecutable with suid permission , .suid_bash
 Running it gives us root access.
+
+```sh
+./.suid_bash -p
+```
